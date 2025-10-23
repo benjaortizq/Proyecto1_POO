@@ -8,6 +8,12 @@ public abstract class Producto {
     private String  presentacion ; 
     private  int precio ; 
 
+    public Producto(String nombre, String presentacion, int precio) {
+        this.nombre = nombre;
+        this.presentacion = presentacion;
+        this.precio = precio;
+    }
+
     public void setNombre(String nombre) {
         this.nombre = nombre;
     }
