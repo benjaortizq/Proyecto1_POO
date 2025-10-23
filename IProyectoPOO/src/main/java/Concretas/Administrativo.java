@@ -1,5 +1,6 @@
 package Concretas;
 
+import Abstractas.Cita;
 import Abstractas.Personal;
 
 public class Administrativo extends Personal {

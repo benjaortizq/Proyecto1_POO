@@ -5,6 +5,7 @@ package Concretas;
  * @author Benjamin Ortiz
  */
 
+import Abstractas.Cita;
 import java.util.ArrayList ;
 import Abstractas.Personal;
 

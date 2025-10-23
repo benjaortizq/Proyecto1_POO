@@ -1,14 +1,15 @@
-package Concretas;
+package Abstractas;
 import java.time.LocalDate;
 import java.time.LocalTime;
-import Abstractas.Personal;
+import Concretas.Item;
+import Concretas.Paciente;
 import java.util.ArrayList;
 
 /**
  *
  * @author benja
  */
-public class Cita {
+public abstract class Cita {
     LocalDate fecha ; 
     LocalTime hora ; 
     Personal profesionalAsignado ; 
