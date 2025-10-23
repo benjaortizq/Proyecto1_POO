@@ -11,7 +11,6 @@ package Abstractas;
 public abstract class Personal {
     private String nombre ; 
     private String horario ;
-    private  Gestorcitas citas;
     private String usuarioEnSistema ;
    
     protected Personal(String nombre, String horario, String usuarioEnSistema) {

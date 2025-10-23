@@ -6,14 +6,13 @@ package Concretas;
 
 /**
  *
- * @author haoki
+ * @author Benjamin o 
  */
 
-import java.util.ArrayList ;
 import Abstractas.Personal;
 
 public class Expediente {
-    private ArrayList<Cita> listaCitas ;
+    private Gestorcitas gestorCitas;
     private Paciente paciente ;
     private Personal personalMedico ;
     private int numeroExpediente; 
@@ -24,7 +23,7 @@ public class Expediente {
         this.personalMedico = personalMedico;
         this.numeroExpediente = numeroExpediente;
         this.alergias = alergias;
-        this.listaCitas= new ArrayList (); 
+        this.gestorCitas = new Gestorcitas();
     }
     
     
