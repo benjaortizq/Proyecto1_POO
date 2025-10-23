@@ -2,6 +2,7 @@ package Concretas;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import Abstractas.Personal;
+import java.util.ArrayList;
 
 /**
  *
@@ -15,6 +16,8 @@ public class Cita {
     String estado; 
     int consultorioAsignado;
     String tipoCita; 
+    ArrayList<Item> productosUsados ;
+    
 
     public Cita(LocalDate fecha, LocalTime hora, Personal profesionalAsignado, Paciente pacienteAsignado, int consultorioAsignado) {
         this.fecha = fecha;
@@ -22,6 +25,7 @@ public class Cita {
         this.profesionalAsignado = profesionalAsignado;
         this.pacienteAsignado = pacienteAsignado;
         this.consultorioAsignado = consultorioAsignado;
+        this.productosUsados = new ArrayList<>();
         
         if ("Medico".equals(profesionalAsignado.getRol())){ 
             this.tipoCita = "Medica" ;
@@ -88,10 +92,41 @@ public class Cita {
     public void setTipoCita(String tipoCita) {
         this.tipoCita = tipoCita;
     }
+
+    public ArrayList<Item> getProductosUsados() {
+        return productosUsados;
+    }
     
     
     
-    
-    
-    
+    public void anadirProducto(Item item ) { 
+        boolean encontrado = false ; 
+        
+        for (Item i : productosUsados) {
+            if (i.getProducto().getNombre().equals(item.getProducto().getNombre())) {
+                // Sumar la cantidad
+                i.setCantidad(i.getCantidad() + item.getCantidad());
+                encontrado = true;
+                break;
+        }
+        if (!encontrado) {
+        productosUsados.add(item);
+        }
+    }
+  } 
+
+public void eliminarProducto(Item item) {
+    for (int i = 0; i < productosUsados.size(); i++) {
+        Item actual = productosUsados.get(i);
+        if (actual.getProducto().getNombre().equals(item.getProducto().getNombre())) {
+            int nuevaCantidad = actual.getCantidad() - item.getCantidad();
+            if (nuevaCantidad > 0) {
+                actual.setCantidad(nuevaCantidad); // restar cantidad
+            } else {
+                productosUsados.remove(i); // eliminar completamente
+            }
+            break;
+        }
+    }
+}
 }
