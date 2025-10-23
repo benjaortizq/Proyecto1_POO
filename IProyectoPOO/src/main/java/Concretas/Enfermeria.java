@@ -1,4 +1,4 @@
-package Concretas;
+ package Concretas;
 
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
@@ -32,7 +32,7 @@ public class Enfermeria extends Personal  {
     }
 
     @Override
-    protected String getRol() {
+    public String getRol() {
         return "Enfermeria";
     }
    

@@ -45,7 +45,7 @@ public abstract class Personal {
     }
     
     
-    protected abstract String getRol();
+    public abstract String getRol();
     
     
     

@@ -36,7 +36,7 @@ public class Doctor extends Personal  {
     
     
     @Override
-    protected String getRol() {
+    public String getRol() {
         return "Médico";
     }
    
