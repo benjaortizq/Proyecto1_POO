@@ -12,7 +12,7 @@ package Concretas;
 import Abstractas.Personal;
 
 public class Expediente {
-    private Gestorcitas gestorCitas;
+    private final Gestorcitas gestorCitas;
     private Paciente paciente ;
     private Personal personalMedico ;
     private int numeroExpediente; 

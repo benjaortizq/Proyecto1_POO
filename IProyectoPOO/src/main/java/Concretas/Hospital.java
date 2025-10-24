@@ -1,7 +1,9 @@
 package Concretas;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.io.Serializable;
+import Abstractas.Personal;
 
 public class Hospital implements Serializable {
 
@@ -10,6 +12,8 @@ public class Hospital implements Serializable {
     private ArrayList<Doctor> listaDoctores;
     private ArrayList<Enfermeria> listaEnfermero;
     private ArrayList<Administrativo> listaAdministrativo;
+    private HashMap<String, Personal> mapaPersonal;
+
 
     // Constructor
     public Hospital() {
@@ -17,6 +21,7 @@ public class Hospital implements Serializable {
         listaDoctores = new ArrayList<>();
         listaEnfermero = new ArrayList<>();
         listaAdministrativo = new ArrayList<>();
+        mapaPersonal = new HashMap<>();
     }
 
     // Getters y Setters
@@ -59,13 +64,20 @@ public class Hospital implements Serializable {
 
     public void agregarDoctor(Doctor d) {
         listaDoctores.add(d);
+        mapaPersonal.put(d.getRol(), d);
     }
 
     public void agregarEnfermero(Enfermeria e) {
         listaEnfermero.add(e);
+         mapaPersonal.put(e.getRol(), e);
     }
 
     public void agregarAdministrativo(Administrativo a) {
         listaAdministrativo.add(a);
+         mapaPersonal.put(a.getRol(), a);
     }
+    
+    public Personal buscarPersonal(String usuario) {
+        return mapaPersonal.get(usuario);
+}
 }

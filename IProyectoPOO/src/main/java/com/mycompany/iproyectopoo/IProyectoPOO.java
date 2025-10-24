@@ -13,3 +13,9 @@ public class IProyectoPOO {
         
     }
 }
+/**TODO : 
+ * - PANTALLAS LOGIN ETC 
+ * - LOGICA PANTALLAS 
+ * - SERIALIZADOR Y PERSISTENCIA CON JSON 
+ * - 
+ */
