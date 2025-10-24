@@ -13,7 +13,7 @@ package Concretas;
 import java.util.HashMap;
 import Abstractas.Producto;
 public class Inventario {
-    private HashMap <String, Item> inventario ; 
+    private final HashMap <String, Item> inventario ; 
 
     public Inventario() {
         this.inventario = new HashMap <>() ;

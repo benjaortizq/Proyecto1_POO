@@ -2,7 +2,7 @@ package com.mycompany.iproyectopoo;
 
 /**
  *
- * @author unnnegro
+ * @author benjamin ortiz 
  */
 import javax.swing.*;
 import Concretas.Hospital ;
@@ -10,7 +10,6 @@ import Concretas.Hospital ;
 public class IProyectoPOO {
     
     public static void main(String[] args) {
-        Hospital hospital = new Hospital (); 
         
     }
 }

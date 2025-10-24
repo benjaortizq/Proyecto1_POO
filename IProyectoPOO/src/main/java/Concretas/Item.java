@@ -1,7 +1,7 @@
 package Concretas;
 import Abstractas.Producto;
 public class Item {
-    private Producto producto  ; 
+    private final Producto producto  ; 
     private int cantidad; 
     
     public Item(Producto producto , int cantidad) { 

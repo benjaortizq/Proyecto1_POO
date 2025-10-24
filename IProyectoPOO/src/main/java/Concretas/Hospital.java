@@ -1,8 +1,9 @@
 package Concretas;
 
 import java.util.ArrayList;
+import java.io.Serializable;
 
-public class Hospital {
+public class Hospital implements Serializable {
 
     // Atributos
     private ArrayList<Paciente> listaPacientes;
