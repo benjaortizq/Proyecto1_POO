@@ -3,8 +3,16 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 package UI;
+
+import Concretas.Administrativo;
+import Concretas.CitaMedica;
+import Concretas.Doctor;
+import Concretas.Enfermeria;
+import Concretas.Hospital;
+import Concretas.Paciente;
 import Abstractas.Cita;
-import java.util.Iterator;
+import java.util.ArrayList;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 /**
  *
@@ -12,12 +20,19 @@ import javax.swing.table.DefaultTableModel;
  */
 public class PantallaCitasAdmin extends javax.swing.JFrame {
     
-    private final Concretas.Gestorcitas gestor = new Concretas.Gestorcitas();
-
+    
+    private final Hospital hospital;
+    private final Administrativo admin;
+    private final  ArrayList <Abstractas.Cita> visibleCitas = new java.util.ArrayList<>();
+    private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(PantallaCitasAdmin.class.getName());
     /**
      * Creates new form PantallaCitasAdmin
+     * @param hospital
+     * @param admin
      */
-    public PantallaCitasAdmin() {
+    public PantallaCitasAdmin(Hospital hospital, Administrativo admin) {
+        this.hospital = hospital;
+        this.admin = admin;
         initComponents();
         setLocationRelativeTo(null);
         actualizarTabla();
@@ -157,60 +172,100 @@ public class PantallaCitasAdmin extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 //nueva cita
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        Concretas.Paciente p = Contexto.hospital.getListaPacientes().get(0);
-        Concretas.Doctor d = Contexto.hospital.getListaDoctores().get(0);
-        Concretas.Administrativo admin = Contexto.hospital.getListaAdministrativo().get(0);
+    if (hospital.getListaPacientes().isEmpty() || hospital.getListaDoctores().isEmpty()) {
+        JOptionPane.showMessageDialog(this, "No hay pacientes o doctores cargados.");
+        return;
+    }
 
-        Concretas.CitaMedica cita = new Concretas.CitaMedica(
-            "—","—", java.time.LocalDate.now(),
-            java.time.LocalTime.of(10,0), d, p, 1);
-        cita.setEstado("Pendiente");
+    Paciente p = hospital.getListaPacientes().get(0); // cambiar por selector si querés
+    Doctor d = hospital.getListaDoctores().get(0);    // cambiar por selector si querés
 
-        gestor.agregarCita(cita, admin);
-        actualizarTabla();
+    CitaMedica cita = new CitaMedica(
+        "—","—",
+        java.time.LocalDate.now(),
+        java.time.LocalTime.of(10,0), d, p, 1
+    );
+    cita.setEstado("Pendiente");
+
+    // agregar directamente al gestor del doctor
+    d.getGestorCitas().agregarCita(cita, admin);
+
+    actualizarTabla();
     }//GEN-LAST:event_jButton1ActionPerformed
-//editar cita
+
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-            int row = jTable1.getSelectedRow();
-            if (row >= 0)
-                gestor.getListaCitas().get(row).setEstado("Atendida");
-            actualizarTabla();
+    int row = jTable1.getSelectedRow();
+    if (row < 0) {
+        JOptionPane.showMessageDialog(this, "Seleccione una fila.");
+        return;
+    }
+    Cita c = visibleCitas.get(row);
+    c.setEstado("Atendida");
+    actualizarTabla();
     }//GEN-LAST:event_jButton2ActionPerformed
 //cancelar cita
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-        int row = jTable1.getSelectedRow();
-        if (row >= 0)
-            gestor.getListaCitas().get(row).setEstado("Cancelada");
-        actualizarTabla();
+    int row = jTable1.getSelectedRow();
+    if (row < 0) {
+        JOptionPane.showMessageDialog(this, "Seleccione una fila.");
+        return;
+    }
+    Cita c = visibleCitas.get(row);
+    c.setEstado("Cancelada");
+    actualizarTabla();
     }//GEN-LAST:event_jButton3ActionPerformed
 //reagendar cita
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
-        int row = jTable1.getSelectedRow();
-        if (row >= 0)
-            gestor.getListaCitas().get(row).setEstado("Reagendada");
-        actualizarTabla();
+    int row = jTable1.getSelectedRow();
+    if (row < 0) {
+        JOptionPane.showMessageDialog(this, "Seleccione una fila.");
+        return;
+    }
+    Cita c = visibleCitas.get(row);
+    c.setEstado("Reagendada");
+    actualizarTabla();
     }//GEN-LAST:event_jButton4ActionPerformed
 //volver
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
-        new PantallaInicioAdmin().setVisible(true);
-        this.dispose();
+    new PantallaInicioAdmin(admin).setVisible(true);
+    this.dispose();
     }//GEN-LAST:event_jButton5ActionPerformed
-    private void actualizarTabla() {
-            DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
-            model.setRowCount(0);
-            model.setColumnIdentifiers(new String[]{
-                "Fecha","Hora","Paciente","Profesional","Estado","Consultorio"
-            });
 
-        for (Cita c : gestor.getListaCitas()) {
+    private void actualizarTabla() {
+    DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
+    model.setRowCount(0);
+    model.setColumnIdentifiers(new String[]{
+        "Fecha","Hora","Paciente","Profesional","Estado","Consultorio"
+    });
+
+    visibleCitas.clear();
+
+    // Todas las citas de doctores
+    for (Doctor d : hospital.getListaDoctores()) {
+        for (Cita c : d.getGestorCitas().getListaCitas()) {
+            visibleCitas.add(c);
             model.addRow(new Object[]{
                 c.getFecha(), c.getHora(),
                 c.getPacienteAsignado().getNombre(),
                 c.getProfesionalAsignado().getNombre(),
-                c.getEstado(), "H"+c.getConsultorioAsignado()
+                c.getEstado(), "H" + c.getConsultorioAsignado()
             });
         }
+    }
+
+    // Todas las citas de enfermeros
+    for (Enfermeria e : hospital.getListaEnfermero()) {
+        for (Cita c : e.getGestorCitas().getListaCitas()) {
+            visibleCitas.add(c);
+            model.addRow(new Object[]{
+                c.getFecha(), c.getHora(),
+                c.getPacienteAsignado().getNombre(),
+                c.getProfesionalAsignado().getNombre(),
+                c.getEstado(), "H" + c.getConsultorioAsignado()
+            });
         }
+    }
+}    
     /**
      * @param args the command line arguments
      */
@@ -232,8 +287,6 @@ public class PantallaCitasAdmin extends javax.swing.JFrame {
         }
         //</editor-fold>
 
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(() -> new PantallaCitasAdmin().setVisible(true));
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

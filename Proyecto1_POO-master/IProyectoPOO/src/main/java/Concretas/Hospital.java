@@ -12,7 +12,7 @@ public class Hospital implements Serializable {
     private ArrayList<Doctor> listaDoctores;
     private ArrayList<Enfermeria> listaEnfermero;
     private ArrayList<Administrativo> listaAdministrativo;
-    private HashMap<String, Personal> mapaPersonal;
+    private final HashMap<String, Personal> mapaPersonal;
 
 
     // Constructor
@@ -64,17 +64,17 @@ public class Hospital implements Serializable {
 
     public void agregarDoctor(Doctor d) {
         listaDoctores.add(d);
-        mapaPersonal.put(d.getRol(), d);
+        mapaPersonal.put(d.getUsuarioEnSistema(), d);
     }
 
     public void agregarEnfermero(Enfermeria e) {
         listaEnfermero.add(e);
-         mapaPersonal.put(e.getRol(), e);
+         mapaPersonal.put(e.getUsuarioEnSistema(), e);
     }
 
     public void agregarAdministrativo(Administrativo a) {
         listaAdministrativo.add(a);
-         mapaPersonal.put(a.getRol(), a);
+         mapaPersonal.put(a.getUsuarioEnSistema(), a);
     }
     
     public Personal buscarPersonal(String usuario) {

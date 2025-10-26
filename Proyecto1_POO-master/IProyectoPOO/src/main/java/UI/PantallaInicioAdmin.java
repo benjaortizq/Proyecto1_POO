@@ -3,6 +3,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 package UI;
+import Concretas.Administrativo;
 
 /**
  *
@@ -11,30 +12,21 @@ package UI;
 public class PantallaInicioAdmin extends javax.swing.JFrame {
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(PantallaInicioAdmin.class.getName());
+    private final Administrativo admin ; 
 
     /**
      * Creates new form PantallaInicioAdmin
+     * @param admin
      */
-    public PantallaInicioAdmin() {
+    public PantallaInicioAdmin(Administrativo admin) {
+        this.admin=admin;
         initComponents();
         setLocationRelativeTo(null);
         inicializarDatos();
     }
     private void inicializarDatos() {
         // Only load once if hospital is empty
-        if (Contexto.hospital.getListaDoctores().isEmpty()) {
-            Contexto.hospital.agregarDoctor(
-                new Concretas.Doctor("Dr. Ramírez","Mañana-Tarde","dr","Cardiología",1234));
-            Contexto.hospital.agregarEnfermero(
-                new Concretas.Enfermeria("Enf. Mora","Tarde-Noche","enf",5678));
-            Contexto.hospital.agregarAdministrativo(
-                new Concretas.Administrativo("Admin López","Mañana-Tarde","admin",1111));
-
-            Concretas.Paciente p = new Concretas.Paciente();
-            p.setNombre("Juan Pérez");
-            p.setEdad((short)32);
-            Contexto.hospital.agregarPaciente(p);
-        }
+       
     }
     /**
      * This method is called from within the constructor to initialize the form.
@@ -124,7 +116,7 @@ public class PantallaInicioAdmin extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 //gestion de citas
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        new PantallaCitasAdmin().setVisible(true);
+        new PantallaCitasAdmin( Contexto.hospital, admin).setVisible(true);
         this.dispose();
     }//GEN-LAST:event_jButton1ActionPerformed
 //expedientes medicos
@@ -145,27 +137,6 @@ public class PantallaInicioAdmin extends javax.swing.JFrame {
     /**
      * @param args the command line arguments
      */
-    public static void main(String args[]) {
-        java.awt.EventQueue.invokeLater(() -> new PantallaInicioAdmin().setVisible(true));
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ReflectiveOperationException | javax.swing.UnsupportedLookAndFeelException ex) {
-            logger.log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(() -> new PantallaInicioAdmin().setVisible(true));
-    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
