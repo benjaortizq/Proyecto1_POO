@@ -10,10 +10,14 @@ import java.util.ArrayList ;
 import Abstractas.Personal;
 
 public class Gestorcitas {
-    private ArrayList<Cita> listaCitas; 
+    private final ArrayList<Cita> listaCitas; 
     
     public Gestorcitas() { 
         listaCitas = new ArrayList<>();  
+    }
+    
+    public int cantidadCitas (){
+        return listaCitas.size();
     }
 
     public void agregarCita(Cita cita, Personal solicitante) { 
@@ -31,7 +35,7 @@ public class Gestorcitas {
             System.out.println("Solo personal administrativo puede eliminar citas.");
         }
     }
-
+    
     public ArrayList<Cita> getListaCitas() {
         return listaCitas;
     }

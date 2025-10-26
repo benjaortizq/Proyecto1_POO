@@ -12,15 +12,21 @@ import Abstractas.Personal;
 public class Doctor extends Personal  {
     private int numeroColegiado ;
     private String especialidad; 
+    private final Gestorcitas gestorCitas;
 
     public Doctor(String nombre, String horario, String usuarioEnSistema, String especialidad, int numeroColegiado) {
         super (nombre , horario , usuarioEnSistema);
         this.numeroColegiado = numeroColegiado;
         this.especialidad = especialidad;
+        this.gestorCitas= new Gestorcitas();
     }
 
     public void setNumeroColegiado(int numeroColegiado) {
         this.numeroColegiado = numeroColegiado;
+    }
+
+    public Gestorcitas getGestorCitas() {
+        return gestorCitas;
     }
 
     public void setEspecialidad(String especialidad) {

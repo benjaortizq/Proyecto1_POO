@@ -17,10 +17,13 @@ import Abstractas.Personal;
  */
 public class Enfermeria extends Personal  {
     private int numeroColegiado ;
+    private final Gestorcitas gestorCitas;
+
 
     public Enfermeria(String nombre, String horario, String usuarioEnSistema, int numeroColegiado) {
         super (nombre , horario , usuarioEnSistema);
         this.numeroColegiado = numeroColegiado;
+        this.gestorCitas= new Gestorcitas();
     }
 
     public void setNumeroColegiado(int numeroColegiado) {
@@ -34,6 +37,10 @@ public class Enfermeria extends Personal  {
     @Override
     public String getRol() {
         return "Enfermeria";
+    }
+
+    public Gestorcitas getGestorCitas() {
+        return gestorCitas;
     }
    
     

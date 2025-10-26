@@ -1,6 +1,8 @@
 package UI;
+import UI.Abstract.FramePersonal;
 import Concretas.Hospital;
 import Abstractas.Personal;
+import UI.Abstract.MainPage;
 import Concretas.Doctor;
 import Concretas.Enfermeria;
 import Concretas.Administrativo;
@@ -12,19 +14,18 @@ import Concretas.Administrativo;
 
 /**
  *
- * @author Benjamin Ortiz
  */
-public class Login extends javax.swing.JFrame {
+
+public class Login extends MainPage{
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(Login.class.getName());
-    private final Hospital hospital; 
 
     /**
      * Creates new form Login
      * @param hospital
      */
     public Login( Hospital hospital ) {
-        this.hospital = hospital;
+        super (hospital);
         initComponents();
     }
 
@@ -66,6 +67,11 @@ public class Login extends javax.swing.JFrame {
 
         jButton1.setFont(new java.awt.Font("Segoe UI", 1, 20)); // NOI18N
         jButton1.setText("Ingresar");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         jLabel4.setFont(new java.awt.Font("Segoe UI Black", 0, 24)); // NOI18N
         jLabel4.setText("HospitalJava");
@@ -84,18 +90,19 @@ public class Login extends javax.swing.JFrame {
                     .addComponent(jLabel5)
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(133, 133, 133)
-                                .addComponent(jLabel2)
-                                .addGap(345, 345, 345))
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel3)
-                                .addGap(18, 18, 18)
-                                .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 228, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addContainerGap())
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                                 .addComponent(jLabel4)
-                                .addGap(306, 306, 306)))
+                                .addGap(306, 306, 306))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addGap(133, 133, 133)
+                                        .addComponent(jLabel2))
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(jLabel3)
+                                        .addGap(18, 18, 18)
+                                        .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 228, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addGap(257, 257, 257)))
                         .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                             .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 360, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGap(212, 212, 212)))))
@@ -127,13 +134,35 @@ public class Login extends javax.swing.JFrame {
         String usuario = jTextField1.getText().trim();
         Personal p = hospital.buscarPersonal(usuario);
         if (p instanceof Doctor doctor) {
-            new FrameDoctor(doctor).setVisible(true);
+            new FramePersonal(doctor, hospital).setVisible(true);
         } else if (p instanceof Enfermeria) {
             new FrameEnfermeria((Enfermeria) p).setVisible(true);
         } else if (p instanceof Administrativo) {
             new FrameAdministrativo((Administrativo) p).setVisible(true);
         }
     }//GEN-LAST:event_jTextField1ActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        String usuario = jTextField1.getText().trim();
+    if (usuario.isEmpty()) {
+        jLabel5.setText(" Ingrese un usuario válido.");
+    }    
+    Personal p = hospital.buscarPersonal(usuario);
+        if (p == null) {
+        jLabel5.setText(" Usuario no encontrado.");
+        return;
+    }
+
+
+    if (p instanceof Doctor doctor) {
+        new FramePersonal(doctor).setVisible(true);
+    } else if (p instanceof Enfermeria enfermeria) {
+        new FrameEnfermeria(enfermeria).setVisible(true);
+    } else if (p instanceof Administrativo admin) {
+        new FrameAdministrativo(admin).setVisible(true);
+    }
+            
+    }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -154,9 +183,6 @@ public class Login extends javax.swing.JFrame {
         } catch (ReflectiveOperationException | javax.swing.UnsupportedLookAndFeelException ex) {
             logger.log(java.util.logging.Level.SEVERE, null, ex);
         }
-        //</editor-fold>
-
-        /* Create and display the form */
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -168,4 +194,7 @@ public class Login extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel5;
     private javax.swing.JTextField jTextField1;
     // End of variables declaration//GEN-END:variables
+
+
 }
+
