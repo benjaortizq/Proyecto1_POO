@@ -14,6 +14,7 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import javax.swing.Timer;
+import Abstractas.Cita ;
 
 /**
  *
@@ -21,7 +22,7 @@ import javax.swing.Timer;
 public class FramePersonal extends MainPage {
     private final Personal personal;
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(FramePersonal.class.getName());
-
+    private Cita cita ;
     /**
      * Creates new form FrameDoctor
      * @param personal
@@ -54,7 +55,7 @@ public class FramePersonal extends MainPage {
         LocalTime hora = LocalTime.now();
 
         jLabel1.setText("Fecha: " + fecha.format(formatoFecha));
-        jLabel2.setText("Hora: " + hora.format(formatoHora));
+        jLabel6.setText("Hora: " + hora.format(formatoHora));
     });
     timer.start();
 }
@@ -84,9 +85,8 @@ public class FramePersonal extends MainPage {
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         jMenuItem1 = new javax.swing.JMenuItem();
-        jMenuItem2 = new javax.swing.JMenuItem();
-        jMenu2 = new javax.swing.JMenu();
         jMenu4 = new javax.swing.JMenu();
+        jMenuItem4 = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -160,15 +160,18 @@ public class FramePersonal extends MainPage {
         });
         jMenu1.add(jMenuItem1);
 
-        jMenuItem2.setText("jMenuItem2");
-        jMenu1.add(jMenuItem2);
-
         jMenuBar1.add(jMenu1);
 
-        jMenu2.setText("Pacientes");
-        jMenuBar1.add(jMenu2);
-
         jMenu4.setText("Herramientas");
+
+        jMenuItem4.setText("Cerrar Sesion");
+        jMenuItem4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem4ActionPerformed(evt);
+            }
+        });
+        jMenu4.add(jMenuItem4);
+
         jMenuBar1.add(jMenu4);
 
         setJMenuBar(jMenuBar1);
@@ -216,6 +219,10 @@ public class FramePersonal extends MainPage {
         // TODO add your handling code here:
     }//GEN-LAST:event_jMenuItem1ActionPerformed
 
+    private void jMenuItem4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem4ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jMenuItem4ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -250,11 +257,10 @@ public class FramePersonal extends MainPage {
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JMenu jMenu1;
-    private javax.swing.JMenu jMenu2;
     private javax.swing.JMenu jMenu4;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuItem jMenuItem1;
-    private javax.swing.JMenuItem jMenuItem2;
+    private javax.swing.JMenuItem jMenuItem4;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JProgressBar jProgressBar1;
     private javax.swing.JSeparator jSeparator1;

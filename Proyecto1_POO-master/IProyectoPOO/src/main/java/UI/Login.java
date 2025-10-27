@@ -1,5 +1,4 @@
 package UI;
-import UI.Abstract.FramePersonal;
 import Concretas.Hospital;
 import Abstractas.Personal;
 import UI.Abstract.MainPage;
@@ -140,13 +139,20 @@ public class Login extends MainPage{
 
     private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
         String usuario = jTextField1.getText().trim();
-        Personal p = hospital.buscarPersonal(usuario);
+    if (usuario.isEmpty()) {
+        jLabel5.setText(" Ingrese un usuario válido.");
+    }    
+    Personal p = hospital.buscarPersonal(usuario);
+    if (p == null) {
+        jLabel5.setText(" Usuario no encontrado.");
+        return;
+        }
         if (p instanceof Doctor ) {
             new FramePersonal(p, hospital).setVisible(true);
         } else if (p instanceof Enfermeria) {
             new FramePersonal(p, hospital).setVisible(true);
         } else if (p instanceof Administrativo) {
-            new PantallaInicioAdmin((Administrativo) p).setVisible(true);
+            new PantallaInicioAdmin((Administrativo) p , hospital ).setVisible(true);
         }
     }//GEN-LAST:event_jTextField1ActionPerformed
 
@@ -156,19 +162,17 @@ public class Login extends MainPage{
         jLabel5.setText(" Ingrese un usuario válido.");
     }    
     Personal p = hospital.buscarPersonal(usuario);
-        if (p == null) {
+    if (p == null) {
         jLabel5.setText(" Usuario no encontrado.");
         return;
-    }
-
-
-    if (p instanceof Doctor) {
-        new FramePersonal(p, hospital).setVisible(true);
-    } else if (p instanceof Enfermeria) {
-        new FramePersonal(p, hospital).setVisible(true);
-    } else if (p instanceof Administrativo) {
-        new FramePersonal(p, hospital).setVisible(true);
-    }
+        }
+        if (p instanceof Doctor ) {
+            new FramePersonal(p, hospital).setVisible(true);
+        } else if (p instanceof Enfermeria) {
+            new FramePersonal(p, hospital).setVisible(true);
+        } else if (p instanceof Administrativo) {
+            new PantallaInicioAdmin((Administrativo) p , hospital ).setVisible(true);
+        }
             
     }//GEN-LAST:event_jButton1ActionPerformed
 

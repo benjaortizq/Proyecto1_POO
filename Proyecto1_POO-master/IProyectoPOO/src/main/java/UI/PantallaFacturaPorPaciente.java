@@ -4,18 +4,22 @@
  */
 package UI;
 import javax.swing.table.DefaultTableModel;
+import Concretas.Administrativo;
 /**
  *
  * @author jackb
  */
 public class PantallaFacturaPorPaciente extends javax.swing.JFrame {
+    private final Administrativo admin ;
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(PantallaFacturaPorPaciente.class.getName());
 
     /**
      * Creates new form PantallaFacturaPorPaciente
+     * @param admin
      */
-    public PantallaFacturaPorPaciente() {
+    public PantallaFacturaPorPaciente(Administrativo admin ) {
+        this.admin=admin;
         initComponents();
         setLocationRelativeTo(null);
         llenarPacientes();
@@ -160,8 +164,8 @@ public class PantallaFacturaPorPaciente extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-
-        this.dispose();
+    new PantallaInicioAdmin(admin , Contexto.hospital ).setVisible(true);
+    this.dispose();
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed

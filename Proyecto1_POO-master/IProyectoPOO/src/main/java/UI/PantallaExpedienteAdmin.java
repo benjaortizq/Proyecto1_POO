@@ -3,6 +3,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 package UI;
+import Concretas.Administrativo;
 
 /**
  *
@@ -13,7 +14,12 @@ public class PantallaExpedienteAdmin extends javax.swing.JFrame {
     /**
      * Creates new form PantallaExpedienteAdmin
      */
-    public PantallaExpedienteAdmin() {
+    
+    private final Administrativo admin;
+    
+    
+    public PantallaExpedienteAdmin(Administrativo admin) {
+        this.admin=admin ;
         initComponents();
         setLocationRelativeTo(null);
         llenarPacientes();
@@ -156,7 +162,8 @@ public class PantallaExpedienteAdmin extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-
+    new PantallaInicioAdmin(admin , Contexto.hospital ).setVisible(true);
+    this.dispose();
     }//GEN-LAST:event_jButton3ActionPerformed
 
     /**

@@ -13,15 +13,18 @@ public class Hospital implements Serializable {
     private ArrayList<Enfermeria> listaEnfermero;
     private ArrayList<Administrativo> listaAdministrativo;
     private final HashMap<String, Personal> mapaPersonal;
+    private final Inventario inventario ; 
+    
 
 
     // Constructor
     public Hospital() {
-        listaPacientes = new ArrayList<>();
-        listaDoctores = new ArrayList<>();
-        listaEnfermero = new ArrayList<>();
-        listaAdministrativo = new ArrayList<>();
-        mapaPersonal = new HashMap<>();
+        this.listaPacientes = new ArrayList<>();
+        this.listaDoctores = new ArrayList<>();
+        this.listaEnfermero = new ArrayList<>();
+        this.listaAdministrativo = new ArrayList<>();
+        this.mapaPersonal = new HashMap<>();
+        this.inventario= new Inventario (); 
     }
 
     // Getters y Setters
@@ -76,8 +79,14 @@ public class Hospital implements Serializable {
         listaAdministrativo.add(a);
          mapaPersonal.put(a.getUsuarioEnSistema(), a);
     }
+
+    public Inventario getInventario() {
+        return inventario;
+    }
+    
     
     public Personal buscarPersonal(String usuario) {
         return mapaPersonal.get(usuario);
-}
+    }
+    
 }

@@ -18,9 +18,9 @@ public class IProyectoPOO {
         // Inicializamos la instancia del hospital con personal, pacientes, etc.
         Hospital hospital = new Hospital();
 
-        Administrativo ADMIN = new Administrativo("Juan Andres", "Manana-Tarde" ,"JuanAndres", 119610999);
-        Doctor Doc = new Doctor("Pablo Esteban ", "Manana-Tarde" ,"PabloEst" , "General", 12378293);
-        Enfermeria Enf = new Enfermeria("Maria Auxiliadora", "Manana-Tarde" ,"MariaAux", 12378293);
+        Administrativo ADMIN = new Administrativo("Juan Andres", "Manana-Tarde" ,"1", 119610999);
+        Doctor Doc = new Doctor("Pablo Esteban ", "Manana-Tarde" ,"2" , "General", 12378293);
+        Enfermeria Enf = new Enfermeria("Maria Auxiliadora", "Manana-Tarde" ,"3", 12378293);
         
         hospital.agregarDoctor(Doc);
         hospital.agregarEnfermero(Enf);

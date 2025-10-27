@@ -227,7 +227,7 @@ public class PantallaCitasAdmin extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton4ActionPerformed
 //volver
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
-    new PantallaInicioAdmin(admin).setVisible(true);
+    new PantallaInicioAdmin(admin , hospital ).setVisible(true);
     this.dispose();
     }//GEN-LAST:event_jButton5ActionPerformed
 

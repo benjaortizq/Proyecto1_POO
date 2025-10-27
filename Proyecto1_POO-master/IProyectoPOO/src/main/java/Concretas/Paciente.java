@@ -9,6 +9,12 @@ public class Paciente {
     private Short edad ;
     private Expediente expediente ;
 
+    public Paciente(String nombre, Short edad) {
+        this.nombre = nombre;
+        this.edad = edad;
+    }
+    
+
     public String getNombre() {
         return nombre;
     }

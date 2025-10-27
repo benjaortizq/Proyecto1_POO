@@ -13,7 +13,7 @@ package UI.Abstract;
 import Concretas.Hospital ;
 import javax.swing.JFrame;
 public class MainPage extends JFrame {
-    protected static Hospital hospital;
+    protected Hospital hospital;
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(MainPage.class.getName());
 
     /**
@@ -34,7 +34,7 @@ public class MainPage extends JFrame {
         this.dispose();
     }
 
-    public static Hospital getHospital() {
+    public Hospital getHospital() {
         return hospital;
     }
     

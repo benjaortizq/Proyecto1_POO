@@ -36,4 +36,20 @@ public class Inventario {
     public Item buscarProducto(String nombre) {
         return inventario.get(nombre);
     }    
+    
+    public HashMap<String, Item> getInventario() {
+    return inventario;
+    }
+    public void agregarUnItem(Item item) {
+    String nombre = item.getProducto().getNombre();
+
+    if (inventario.containsKey(nombre)) {
+        // Si ya existe, sumamos la cantidad
+        Item existente = inventario.get(nombre);
+        existente.setCantidad(existente.getCantidad() + item.getCantidad());
+    } else {
+        // Si no existe, lo agregamos
+        inventario.put(nombre, item);
+    }
+}
 }
