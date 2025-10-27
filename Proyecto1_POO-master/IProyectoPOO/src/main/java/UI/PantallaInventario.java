@@ -12,6 +12,7 @@ import javax.swing.table.DefaultTableModel;
 import Concretas.Item;
 import Concretas.Inventario;
 import Concretas.Administrativo;
+import Concretas.Hospital;
 
 /**
  *
@@ -20,14 +21,18 @@ import Concretas.Administrativo;
 public class PantallaInventario extends javax.swing.JFrame {
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(PantallaInventario.class.getName());
+    private Hospital hospital;
     private DefaultTableModel modeloTabla;
     private final Inventario inventario; // referencia al modelo lógico
-    private final Administrativo admin ;
+    private Administrativo admin ;
     
     
     
-    public PantallaInventario(Inventario inventario, Administrativo admin ) {
+    public PantallaInventario(Inventario inventario, Administrativo admin, Hospital hospital ) {
         this.inventario = inventario; 
+        this.hospital=hospital;
+        
+        
         this.admin=admin;
         initComponents();
         modeloTabla = (DefaultTableModel) jTable1.getModel();
@@ -306,7 +311,7 @@ public class PantallaInventario extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton5ActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-    new PantallaInicioAdmin(admin , Contexto.hospital ).setVisible(true);
+    new PantallaInicioAdmin(admin ,hospital ).setVisible(true);
     this.dispose();
     }//GEN-LAST:event_jButton1ActionPerformed
 

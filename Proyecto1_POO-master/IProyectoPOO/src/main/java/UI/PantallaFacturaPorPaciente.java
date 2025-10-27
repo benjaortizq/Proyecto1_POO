@@ -5,21 +5,25 @@
 package UI;
 import javax.swing.table.DefaultTableModel;
 import Concretas.Administrativo;
+import Concretas.Hospital;
 /**
  *
  * @author jackb
  */
 public class PantallaFacturaPorPaciente extends javax.swing.JFrame {
-    private final Administrativo admin ;
+    private Administrativo admin ;
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(PantallaFacturaPorPaciente.class.getName());
+    private Hospital hospital;
 
     /**
      * Creates new form PantallaFacturaPorPaciente
      * @param admin
+     * @param hospital
      */
-    public PantallaFacturaPorPaciente(Administrativo admin ) {
+    public PantallaFacturaPorPaciente(Administrativo admin, Hospital hospital ) {
         this.admin=admin;
+        this.hospital=hospital;
         initComponents();
         setLocationRelativeTo(null);
         llenarPacientes();
@@ -27,7 +31,7 @@ public class PantallaFacturaPorPaciente extends javax.swing.JFrame {
 
     private void llenarPacientes() {
         jComboBox1.removeAllItems();
-        for (Concretas.Paciente p : Contexto.hospital.getListaPacientes())
+        for (Concretas.Paciente p :hospital.getListaPacientes())
             jComboBox1.addItem(p.getNombre());
     }
     /**
@@ -137,9 +141,9 @@ public class PantallaFacturaPorPaciente extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        Concretas.Paciente p = Contexto.hospital.getListaPacientes()
+        Concretas.Paciente p = hospital.getListaPacientes()
             .get(jComboBox1.getSelectedIndex());
-        Concretas.Doctor d = Contexto.hospital.getListaDoctores().get(0);
+        Concretas.Doctor d = hospital.getListaDoctores().get(0);
 
         Concretas.CitaMedica cita = new Concretas.CitaMedica(
             "Dolor de cabeza","Paracetamol",
@@ -164,7 +168,7 @@ public class PantallaFacturaPorPaciente extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-    new PantallaInicioAdmin(admin , Contexto.hospital ).setVisible(true);
+    new PantallaInicioAdmin(admin ,hospital ).setVisible(true);
     this.dispose();
     }//GEN-LAST:event_jButton3ActionPerformed
 

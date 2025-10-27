@@ -43,7 +43,10 @@ public class Enfermeria extends Personal  {
         return gestorCitas;
     }
    
-    
+    @Override
+public String toString() {
+    return "Enf. " + nombre ;
+}
 
     
    

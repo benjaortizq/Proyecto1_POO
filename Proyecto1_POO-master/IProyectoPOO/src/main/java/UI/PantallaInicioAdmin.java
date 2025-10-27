@@ -17,8 +17,8 @@ import javax.swing.Timer;
 public class PantallaInicioAdmin extends javax.swing.JFrame {
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(PantallaInicioAdmin.class.getName());
-    private final Administrativo admin ; 
-    private final Hospital hospital;
+    private  Administrativo admin ; 
+    private Hospital hospital;
 
     /**
      * Creates new form PantallaInicioAdmin
@@ -199,31 +199,32 @@ public class PantallaInicioAdmin extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 //gestion de citas
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        new PantallaCitasAdmin( Contexto.hospital, admin).setVisible(true);
+        new PantallaCitasAdmin( hospital, admin).setVisible(true);
         this.dispose();
     }//GEN-LAST:event_jButton1ActionPerformed
 //expedientes medicos
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        new PantallaExpedienteAdmin(admin).setVisible(true);
+        new PantallaExpedienteAdmin(admin, hospital).setVisible(true);
         this.dispose();
     }//GEN-LAST:event_jButton2ActionPerformed
 //facturas por paciente
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-    new UI.PantallaInventario(hospital.getInventario(), admin).setVisible(true);
+    new UI.PantallaInventario(hospital.getInventario(), admin, hospital).setVisible(true);
         this.dispose();
     }//GEN-LAST:event_jButton3ActionPerformed
 //cerrar sesion
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
-        System.exit(0);
+        new UI.Login(hospital).setVisible(true); 
+        this.dispose();
     }//GEN-LAST:event_jButton4ActionPerformed
 
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
-        new PantallaFacturaPorPaciente(admin).setVisible(true);
+        new PantallaFacturaPorPaciente(admin, hospital).setVisible(true);
         this.dispose();
     }//GEN-LAST:event_jButton5ActionPerformed
 
     private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
-    new RegistroPaciente( Contexto.hospital  ,admin  ).setVisible(true);
+    new RegistroPaciente(hospital  ,admin  ).setVisible(true);
     this.dispose();    }//GEN-LAST:event_jButton6ActionPerformed
 
     /**

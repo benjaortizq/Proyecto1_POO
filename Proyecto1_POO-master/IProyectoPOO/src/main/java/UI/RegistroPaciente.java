@@ -18,8 +18,8 @@ import java.util.Set;
 public class RegistroPaciente extends javax.swing.JFrame {
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(RegistroPaciente.class.getName());
-    private  final Administrativo admin ; 
-    private  final Hospital hospital;
+    private  Administrativo admin ; 
+    private Hospital hospital;
     
 
     /**
@@ -151,7 +151,7 @@ public class RegistroPaciente extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-    new PantallaInicioAdmin(admin , Contexto.hospital ).setVisible(true);
+    new PantallaInicioAdmin(admin , hospital ).setVisible(true);
     this.dispose();
     }//GEN-LAST:event_jButton1ActionPerformed
 
@@ -174,7 +174,7 @@ public class RegistroPaciente extends javax.swing.JFrame {
     }
     try {
         edad = (short) Integer.parseInt(edadStr);
-        if (edad <= 0) {
+        if (edad <= 0) { 
             jLabel4.setText("Ingrese una edad válida.");
             return;
         }

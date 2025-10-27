@@ -14,6 +14,9 @@ import Abstractas.Cita;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+import java.time.LocalDate;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 /**
  *
  * @author jackb
@@ -21,9 +24,9 @@ import javax.swing.table.DefaultTableModel;
 public class PantallaCitasAdmin extends javax.swing.JFrame {
     
     
-    private final Hospital hospital;
-    private final Administrativo admin;
-    private final  ArrayList <Abstractas.Cita> visibleCitas = new java.util.ArrayList<>();
+    private  Hospital hospital;
+    private  Administrativo admin;
+    private   ArrayList <Abstractas.Cita> visibleCitas = new java.util.ArrayList<>();
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(PantallaCitasAdmin.class.getName());
     /**
      * Creates new form PantallaCitasAdmin
@@ -172,24 +175,97 @@ public class PantallaCitasAdmin extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 //nueva cita
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-    if (hospital.getListaPacientes().isEmpty() || hospital.getListaDoctores().isEmpty()) {
-        JOptionPane.showMessageDialog(this, "No hay pacientes o doctores cargados.");
+    // Verifica que haya datos
+    if (hospital.getListaPacientes().isEmpty() || 
+        (hospital.getListaDoctores().isEmpty() && hospital.getListaEnfermero().isEmpty())) {
+        JOptionPane.showMessageDialog(this, "No hay pacientes o profesionales cargados.");
         return;
     }
 
-    Paciente p = hospital.getListaPacientes().get(0); // cambiar por selector si querés
-    Doctor d = hospital.getListaDoctores().get(0);    // cambiar por selector si querés
-
-    CitaMedica cita = new CitaMedica(
-        "—","—",
-        java.time.LocalDate.now(),
-        java.time.LocalTime.of(10,0), d, p, 1
+    // Seleccionar paciente
+        var pacientes = hospital.getListaPacientes().toArray(new Paciente[0]);
+    Paciente paciente = (Paciente) JOptionPane.showInputDialog(
+            this,
+            "Seleccione el paciente:",
+            "Nueva Cita",
+            JOptionPane.PLAIN_MESSAGE,
+            null,
+            pacientes,
+            pacientes[0]
     );
-    cita.setEstado("Pendiente");
+    if (paciente == null) return;
 
-    // agregar directamente al gestor del doctor
-    d.getGestorCitas().agregarCita(cita, admin);
+    // Seleccionar tipo de profesional
+    String[]tipos = {"Médico", "Enfermería"};
+    String tipoSeleccionado = (String) JOptionPane.showInputDialog(
+            this,
+            "Seleccione el tipo de profesional:",
+            "Tipo de Cita",
+            JOptionPane.PLAIN_MESSAGE,
+            null,
+            tipos,
+            tipos[0]
+    );
+    if (tipoSeleccionado == null) return;
 
+    // Seleccionar profesional según tipo
+    Abstractas.Personal profesional = null;
+    if (tipoSeleccionado.equals("Médico")) {
+        if (hospital.getListaDoctores().isEmpty()) {
+            JOptionPane.showMessageDialog(this, "No hay doctores disponibles.");
+            return;
+        }
+        Doctor[] doctores = hospital.getListaDoctores().toArray(new Doctor[0]);
+        profesional = (Doctor) JOptionPane.showInputDialog(
+                this, "Seleccione el doctor:", "Profesional",
+                JOptionPane.PLAIN_MESSAGE, null, doctores, doctores[0]
+        );
+    } else {
+        if (hospital.getListaEnfermero().isEmpty()) {
+            JOptionPane.showMessageDialog(this, "No hay enfermeros disponibles.");
+            return;
+        }
+        Enfermeria[] enfermeros = hospital.getListaEnfermero().toArray(new Enfermeria[0]);
+        profesional = (Enfermeria) JOptionPane.showInputDialog(
+                this, "Seleccione el enfermero:", "Profesional",
+                JOptionPane.PLAIN_MESSAGE, null, enfermeros, enfermeros[0]
+        );
+    }
+    if (profesional == null) return;
+
+    // Solicitar fecha y hora
+    String fechaStr = JOptionPane.showInputDialog(this, "Ingrese la fecha (AAAA-MM-DD):", LocalDate.now().toString());
+    String horaStr = JOptionPane.showInputDialog(this, "Ingrese la hora (HH:MM):", "10:00");
+
+    LocalDate fecha;
+    LocalTime hora;
+    try {
+        fecha = LocalDate.parse(fechaStr);
+        hora = LocalTime.parse(horaStr);
+    } catch (Exception e) {
+        JOptionPane.showMessageDialog(this, "Formato de fecha/hora inválido.");
+        return;
+    }
+
+    // Crear la cita
+    Cita nuevaCita;
+    if (profesional instanceof Doctor) {
+        nuevaCita = new CitaMedica("—", "—", fecha, hora, (Doctor) profesional, paciente, 1);
+    } else {
+        nuevaCita = new Concretas.CitaEnfermeria("—", "—", fecha, hora, (Enfermeria) profesional, paciente, 1);
+    }
+    nuevaCita.setEstado("Pendiente");
+
+    // Asociar al profesional y al expediente del paciente
+    if (profesional instanceof Doctor) {
+        ((Doctor) profesional).getGestorCitas().agregarCita(nuevaCita, admin);
+    }       
+    else if (profesional instanceof Enfermeria) {
+    ((Enfermeria) profesional).getGestorCitas().agregarCita(nuevaCita, admin);
+}
+    paciente.getExpediente().getGestorCitas().agregarCita(nuevaCita, admin);
+
+    JOptionPane.showMessageDialog(this, "Cita creada exitosamente.");
     actualizarTabla();
     }//GEN-LAST:event_jButton1ActionPerformed
 
@@ -232,7 +308,7 @@ public class PantallaCitasAdmin extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton5ActionPerformed
 
     private void actualizarTabla() {
-    DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
+    DefaultTableModel model = (DefaultTableModel) jTable3.getModel();
     model.setRowCount(0);
     model.setColumnIdentifiers(new String[]{
         "Fecha","Hora","Paciente","Profesional","Estado","Consultorio"
@@ -242,27 +318,50 @@ public class PantallaCitasAdmin extends javax.swing.JFrame {
 
     // Todas las citas de doctores
     for (Doctor d : hospital.getListaDoctores()) {
+        if (d.getGestorCitas() == null) continue;
         for (Cita c : d.getGestorCitas().getListaCitas()) {
-            visibleCitas.add(c);
-            model.addRow(new Object[]{
-                c.getFecha(), c.getHora(),
-                c.getPacienteAsignado().getNombre(),
-                c.getProfesionalAsignado().getNombre(),
-                c.getEstado(), "H" + c.getConsultorioAsignado()
-            });
+            if (!visibleCitas.contains(c)) {
+                visibleCitas.add(c);
+                model.addRow(new Object[]{
+                    c.getFecha(), c.getHora(),
+                    c.getPacienteAsignado().getNombre(),
+                    c.getProfesionalAsignado().getNombre(),
+                    c.getEstado(), "H" + c.getConsultorioAsignado()
+                });
+            }
         }
     }
 
     // Todas las citas de enfermeros
     for (Enfermeria e : hospital.getListaEnfermero()) {
+        if (e.getGestorCitas() == null) continue;
         for (Cita c : e.getGestorCitas().getListaCitas()) {
-            visibleCitas.add(c);
-            model.addRow(new Object[]{
-                c.getFecha(), c.getHora(),
-                c.getPacienteAsignado().getNombre(),
-                c.getProfesionalAsignado().getNombre(),
-                c.getEstado(), "H" + c.getConsultorioAsignado()
-            });
+            if (!visibleCitas.contains(c)) {
+                visibleCitas.add(c);
+                model.addRow(new Object[]{
+                    c.getFecha(), c.getHora(),
+                    c.getPacienteAsignado().getNombre(),
+                    c.getProfesionalAsignado().getNombre(),
+                    c.getEstado(), "H" + c.getConsultorioAsignado()
+                });
+            }
+        }
+    }
+
+    // Todas las citas de los expedientes de pacientes (por si quedaron ahí)
+    for (Paciente p : hospital.getListaPacientes()) {
+        if (p.getExpediente() == null) continue;
+        if (p.getExpediente().getGestorCitas() == null) continue;
+        for (Cita c : p.getExpediente().getGestorCitas().getListaCitas()) {
+            if (!visibleCitas.contains(c)) {
+                visibleCitas.add(c);
+                model.addRow(new Object[]{
+                    c.getFecha(), c.getHora(),
+                    c.getPacienteAsignado().getNombre(),
+                    c.getProfesionalAsignado().getNombre(),
+                    c.getEstado(), "H" + c.getConsultorioAsignado()
+                });
+            }
         }
     }
 }    

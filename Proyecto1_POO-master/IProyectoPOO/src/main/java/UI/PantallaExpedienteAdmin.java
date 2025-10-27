@@ -4,6 +4,7 @@
  */
 package UI;
 import Concretas.Administrativo;
+import Concretas.Hospital;
 
 /**
  *
@@ -15,10 +16,12 @@ public class PantallaExpedienteAdmin extends javax.swing.JFrame {
      * Creates new form PantallaExpedienteAdmin
      */
     
-    private final Administrativo admin;
+    private Administrativo admin;
+    private Hospital hospital;
     
     
-    public PantallaExpedienteAdmin(Administrativo admin) {
+    public PantallaExpedienteAdmin(Administrativo admin, Hospital hospital) {
+        this.hospital=hospital;
         this.admin=admin ;
         initComponents();
         setLocationRelativeTo(null);
@@ -27,7 +30,7 @@ public class PantallaExpedienteAdmin extends javax.swing.JFrame {
     
     private void llenarPacientes() {
         jComboBox1.removeAllItems();
-        for (Concretas.Paciente p : Contexto.hospital.getListaPacientes())
+        for (Concretas.Paciente p : hospital.getListaPacientes())
             jComboBox1.addItem(p.getNombre());
     }
 
@@ -134,13 +137,13 @@ public class PantallaExpedienteAdmin extends javax.swing.JFrame {
     }//GEN-LAST:event_jComboBox1ActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        Concretas.Paciente p = Contexto.hospital.getListaPacientes()
+        Concretas.Paciente p = hospital.getListaPacientes()
             .get(jComboBox1.getSelectedIndex());
 
         Concretas.Expediente e = p.getExpediente();
         if (e == null) {
             e = new Concretas.Expediente(
-                p, Contexto.hospital.getListaDoctores().get(0),
+                p,hospital.getListaDoctores().get(0),
                 1000 + jComboBox1.getSelectedIndex(), "Ninguna");
             p.setExpediente(e);
         }
@@ -153,7 +156,7 @@ public class PantallaExpedienteAdmin extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        Concretas.Paciente p = Contexto.hospital.getListaPacientes()
+        Concretas.Paciente p = hospital.getListaPacientes()
             .get(jComboBox1.getSelectedIndex());
         if (p.getExpediente() != null) {
             p.getExpediente().setAlergias("Actualizado el " + java.time.LocalDate.now());
@@ -162,13 +165,15 @@ public class PantallaExpedienteAdmin extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-    new PantallaInicioAdmin(admin , Contexto.hospital ).setVisible(true);
+    new PantallaInicioAdmin(admin ,hospital ).setVisible(true);
     this.dispose();
     }//GEN-LAST:event_jButton3ActionPerformed
 
     /**
      * @param args the command line arguments
      */
+    
+    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;

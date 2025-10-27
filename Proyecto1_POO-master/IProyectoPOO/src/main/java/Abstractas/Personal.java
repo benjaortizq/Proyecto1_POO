@@ -9,7 +9,7 @@ package Abstractas;
  * @author Benjamin Ortiz
  */
 public abstract class Personal {
-    private String nombre ; 
+    protected String nombre ; 
     private String horario ;
     private String usuarioEnSistema ;
    
@@ -42,6 +42,7 @@ public abstract class Personal {
     public void setUsuarioEnSistema(String usuarioEnSistema) {
         this.usuarioEnSistema = usuarioEnSistema;
     }
+    
     
     
     public abstract String getRol();

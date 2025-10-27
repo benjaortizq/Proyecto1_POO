@@ -58,6 +58,10 @@ public class Expediente {
     public void setAlergias(String alergias) {
         this.alergias = alergias;
     }
+
+    public Gestorcitas getGestorCitas() {
+        return gestorCitas;
+    }
     
     
     

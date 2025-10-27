@@ -39,13 +39,16 @@ public class Doctor extends Personal  {
     public String getEspecialidad() {
         return especialidad;
     }
-    
+
     
     @Override
     public String getRol() {
         return "Médico";
     }
-   
+   @Override
+public String toString() {
+    return "Dr. " + nombre + " (" + especialidad + ")";
+}
     
 
     

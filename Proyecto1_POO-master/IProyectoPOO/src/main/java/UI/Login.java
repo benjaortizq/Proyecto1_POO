@@ -1,7 +1,6 @@
 package UI;
 import Concretas.Hospital;
 import Abstractas.Personal;
-import UI.Abstract.MainPage;
 import Concretas.Doctor;
 import Concretas.Enfermeria;
 import Concretas.Administrativo;
@@ -15,18 +14,20 @@ import Concretas.Administrativo;
  *
  */
 
-public class Login extends MainPage{
+public class Login extends javax.swing.JFrame{
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(Login.class.getName());
-
+    private Hospital hospital ; 
     /**
      * Creates new form Login
      * @param hospital
+     * 
      */
     public Login( Hospital hospital ) {
-        super (hospital);
+        this.hospital = hospital;
         initComponents();
     }
+   
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -154,6 +155,7 @@ public class Login extends MainPage{
         } else if (p instanceof Administrativo) {
             new PantallaInicioAdmin((Administrativo) p , hospital ).setVisible(true);
         }
+        this.dispose();
     }//GEN-LAST:event_jTextField1ActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
@@ -173,6 +175,7 @@ public class Login extends MainPage{
         } else if (p instanceof Administrativo) {
             new PantallaInicioAdmin((Administrativo) p , hospital ).setVisible(true);
         }
+        this.dispose();
             
     }//GEN-LAST:event_jButton1ActionPerformed
 

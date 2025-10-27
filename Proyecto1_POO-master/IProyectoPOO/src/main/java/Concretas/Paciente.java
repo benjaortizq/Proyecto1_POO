@@ -38,6 +38,10 @@ public class Paciente {
     public void setExpediente(Expediente expediente) {
         this.expediente = expediente;
     }
+    @Override
+    public String toString() {
+    return nombre ;
+}
     
     
 }
